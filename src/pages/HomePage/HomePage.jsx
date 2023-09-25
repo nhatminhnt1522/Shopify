@@ -44,7 +44,7 @@ const HomePage = () => {
 
     return (
         <Loading isLoading={isLoading || loading}>
-            {/* <div style={{ width: '1270px', margin: '0 auto' }}>
+            <div style={{ width: '1270px', margin: '0 auto' }}>
                 <WrapperTypeProduct>
                     {typeProducts.map((item) => {
                         return (
@@ -52,7 +52,7 @@ const HomePage = () => {
                         )
                     })}
                 </WrapperTypeProduct>
-            </div> */}
+            </div>
             <div className='body' style={{ width: '100%', }}>
                 <div id="container" style={{ height: '1000px', width: '1270px', margin: '0 auto' }}>
                     <div className='rounded-2xl mt-12'>

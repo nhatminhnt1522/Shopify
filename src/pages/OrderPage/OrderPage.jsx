@@ -35,7 +35,6 @@ import * as message from '../../components/Message/Message';
 import { updateUser } from '../../redux/slides/userSlide';
 import { useNavigate } from 'react-router-dom';
 import StepComponent from '../../components/StepConponent/StepComponent';
-import { InputNumber } from 'antd';
 
 const OrderPage = () => {
   const order = useSelector((state) => state.order);
@@ -64,23 +63,16 @@ const OrderPage = () => {
     }
   };
 
-  const handleChangeCount = (v) => {
-    const idProduct = '6508ce6bfe033f66f333e7b4';
-
-    if (Number(v) <= order?.amount) {
-      dispatch(increaseAmount({ idProduct }));
+  const handleChangeCount = (type, idProduct, limited) => {
+    if (type === 'increase') {
+      if (!limited) {
+        dispatch(increaseAmount({ idProduct }));
+      }
     } else {
-      dispatch(decreaseAmount({ idProduct }));
+      if (!limited) {
+        dispatch(decreaseAmount({ idProduct }));
+      }
     }
-    // if (type === 'increase') {
-    //   if (!limited) {
-    //     dispatch(increaseAmount({ idProduct }));
-    //   }
-    // } else {
-    //   if (!limited) {
-    //     dispatch(decreaseAmount({ idProduct }));
-    //   }
-    // }
   };
 
   const handleDeleteOrder = (idProduct) => {
@@ -320,23 +312,52 @@ const OrderPage = () => {
                           {convertPrice(order?.price)}
                         </span>
                       </span>
-                      <InputNumber
-                        min={1}
-                        max={order?.countInstock}
-                        defaultValue={order?.amount}
-                        onChange={(value) => {
-                          handleChangeCount(value);
-                        }}
-                      />
-                      {/* <WrapperCountOrder>
-                                                <button style={{ border: 'none', background: 'transparent', cursor: 'pointer' }} onClick={() => handleChangeCount('decrease', order?.product, order?.amount === 1)}>
-                                                    <MinusOutlined style={{ color: '#000', fontSize: '10px' }} />
-                                                </button>
-                                                <WrapperInputNumber defaultValue={order?.amount} value={order?.amount} size="small" min={1} max={order?.countInstock} />
-                                                <button style={{ border: 'none', background: 'transparent', cursor: 'pointer' }} onClick={() => handleChangeCount('increase', order?.product, order?.amount === order.countInstock, order?.amount === 1)}>
-                                                    <PlusOutlined style={{ color: '#000', fontSize: '10px' }} />
-                                                </button>
-                                            </WrapperCountOrder> */}
+                      <WrapperCountOrder>
+                        <button
+                          style={{
+                            border: 'none',
+                            background: 'transparent',
+                            cursor: 'pointer',
+                          }}
+                          onClick={() =>
+                            handleChangeCount(
+                              'decrease',
+                              order?.product,
+                              order?.amount === 1
+                            )
+                          }
+                        >
+                          <MinusOutlined
+                            style={{ color: '#000', fontSize: '10px' }}
+                          />
+                        </button>
+                        <WrapperInputNumber
+                          defaultValue={order?.amount}
+                          value={order?.amount}
+                          size='small'
+                          min={1}
+                          max={order?.countInstock}
+                        />
+                        <button
+                          style={{
+                            border: 'none',
+                            background: 'transparent',
+                            cursor: 'pointer',
+                          }}
+                          onClick={() =>
+                            handleChangeCount(
+                              'increase',
+                              order?.product,
+                              order?.amount === order.countInstock,
+                              order?.amount === 1
+                            )
+                          }
+                        >
+                          <PlusOutlined
+                            style={{ color: '#000', fontSize: '10px' }}
+                          />
+                        </button>
+                      </WrapperCountOrder>
                       <span
                         style={{
                           color: 'rgb(255, 66, 78)',
