@@ -1,4 +1,5 @@
 {
+  "proxy": "https://shopify-rho-one.vercel.app/",
   "name": "bamishop",
   "version": "0.1.0",
   "private": true,
