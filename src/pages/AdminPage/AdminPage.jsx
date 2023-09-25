@@ -15,10 +15,16 @@ import { useSelector } from 'react-redux';
 import { useQueries } from '@tanstack/react-query';
 import { useMemo } from 'react';
 import Loading from '../../components/LoadingComponent/Loading';
+import { useNavigate } from 'react-router-dom';
 
 const AdminPage = () => {
   const user = useSelector((state) => state?.user)
-
+  const navigate= useNavigate()
+  useEffect(()=>{
+    if(!user.isAdmin){
+      navigate('/')
+    }
+  },[])
   const items = [
     getItem('Người dùng', 'users', <UserOutlined />),
     getItem('Sản phẩm', 'products', <AppstoreOutlined />),
